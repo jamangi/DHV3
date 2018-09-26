@@ -2,14 +2,18 @@ let gb = document.getElementById('gamebox');
 let gbheight = gb.offsetHeight;
 let gbwidth = gb.offsetWidth;
 let shortest = gbheight < gbwidth? gbheight : gbwidth;
+let fraction = 10;
+let debugBorder = 2;
 
 // cellsize is a fraction of shortest dimension
-let cellSize = Math.floor(shortest / 10) - 2;
+let cellSize = Math.floor(shortest / fraction) - debugBorder;
+console.log(cellSize)
 
 // calculate amount of expected cells
 let cols = Math.floor(gbwidth / cellSize);
 let rows = Math.floor(gbheight / cellSize);
 let cellCount = cols * rows;
+console.log(cellCount)
 
 function initGrid() {
     // fill the gamebox with divs
@@ -20,7 +24,7 @@ function initGrid() {
     shortest = gbheight < gbwidth? gbheight : gbwidth;
 
     // cellsize is a fraction of shortest dimension
-    cellSize = Math.floor(shortest / 10) - 2;
+    cellSize = Math.floor(shortest / fraction) - debugBorder;
 
     // calculate amount of expected cells
     cols = Math.floor(gbwidth / cellSize);
@@ -64,7 +68,9 @@ function clearGrid() {
 
 function cellClick() {
     console.log(this.id);
-    pathSearch(this.id);
+    clickedCell = this.id;
+    if (done === true)
+        pathSearch(this.id);
 }
 
 function findCell(id){
@@ -76,7 +82,10 @@ function findCell(id){
 
 
 window.onresize = function(event) {
-    self.clearGrid()
-    self.initGrid()
+    clearGrid()
+    initGrid()
+    initCharacter()
 }
+
+
 initGrid();

@@ -1,11 +1,14 @@
 let currentCell = 0;
+let clickedCell = 0
+let done = true;
 let pathSearch = simpleShortestPath;
+let speed = 150;
 
 
-function simpleShortestPath(dest) {
+function simpleShortestPath() {
     let src = currentCell;
+    let dest = clickedCell;
     console.log("current cell: "+currentCell)
-    console.log("dest cell: "+dest)
     if (src == dest){
         stop();
         return;
@@ -22,16 +25,50 @@ function simpleShortestPath(dest) {
         go("down")
     else if (srcCell.top > destCell.top)   //go up
         go("up")
-    simpleShortestPath(dest);
+
+    updateCharacter("user", currentCell);
+    setTimeout(simpleShortestPath, speed);
 }
 
 function go(dir) {
+    done = false;
     switch(dir){
         case "right": currentCell += 1; break;
         case "left": currentCell -= 1; break;
         case "down": currentCell += cols; break;
         case "up": currentCell -= cols; break;
     }
+    // update css top/left of character
 }
 
-function stop() {}
+function stop() {done = true;}
+
+function updateCharacter (cId, dest){
+    let character = document.getElementById(cId);
+    let destCell = findCell(dest);
+    character.style.top = (destCell.top + debugBorder) + "px";
+    character.style.left = (destCell.left + debugBorder) + "px";
+
+}
+
+function initCharacter() {
+    let character = document.createElement("div");
+    let cImg = document.createElement("img");
+    let helper = document.createElement("div");
+    helper.setAttribute("class", "helper");
+    cImg.setAttribute("src", "images/dog/dog_sleep.gif");
+    character.append(helper);
+    character.append(cImg);
+
+    character.setAttribute("id", "user");
+    character.setAttribute("class", "character");
+    character.style.height = cellSize + "px";
+    character.style.width = cellSize + "px";
+    gb.append(character);
+
+}
+
+
+
+initCharacter();
+updateCharacter("user", currentCell);
