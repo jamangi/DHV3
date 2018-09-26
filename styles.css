@@ -1,0 +1,13 @@
+* {padding: 0; margin:0;}
+:root {
+    --headfoot: #233d4d;
+}
+html {height: 100%;}
+body {height: 100%; background: var(--headfoot);}
+main {height: 90%; background: green;}
+footer {height: 10%; background: var(--headfoot);}
+article {height: 100%; background: #619b8a; width: 100%; float:left;}
+aside {height: 0%; background: #233d4d; width: 0%; height: 0%; float: right; display:none;}
+
+.cell {border: 1px solid blue; float:left;}
+.character {}
