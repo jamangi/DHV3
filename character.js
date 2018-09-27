@@ -2,7 +2,7 @@ let currentCell = 0;
 let clickedCell = 0
 let done = true;
 let pathSearch = simpleShortestPath;
-let speed = 200;
+let speed = 150;
 let facing = "Right";
 let lastMode = "Sleep"
 let mode = "Sleep"
@@ -48,14 +48,8 @@ function go(dir, dist) {
         case "Up": currentCell -= cols; break;
     }
     facing = dir;
-    if (dist > 5){
-        mode = "Run"
-        speed = 150
-    }
-    else{
-        mode = "Walk"
-        speed = 250
-    }
+    mode = "Run"
+    
     // update css top/left of character
 }
 
