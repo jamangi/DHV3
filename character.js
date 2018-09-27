@@ -2,8 +2,14 @@ let currentCell = 0;
 let clickedCell = 0
 let done = true;
 let pathSearch = simpleShortestPath;
-let speed = 150;
-
+let speed = 200;
+let facing = "Right";
+let lastMode = "Sleep"
+let mode = "Sleep"
+let modes = ["Walk", "Run", "Sit", "Sleep"]
+let dirs =  ["Up", "Down", "Left", "Right"]
+let name = "titan"
+let character;
 
 function simpleShortestPath() {
     let src = currentCell;
@@ -16,59 +22,78 @@ function simpleShortestPath() {
 
     let srcCell = findCell(src); // returns coordinates of cell
     let destCell = findCell(dest);
+    let hDist = Math.abs(src - dest)
+    let vDist = Math.abs(src - dest)
+    let dist = Math.max(hDist, vDist)
 
     if (srcCell.left < destCell.left)      //go right
-        go("right")
+        go("Right", dist)
     else if (srcCell.left > destCell.left) //go left
-        go("left")
+        go("Left", dist)
     else if (srcCell.top < destCell.top)   //go down
-        go("down")
+        go("Down", dist)
     else if (srcCell.top > destCell.top)   //go up
-        go("up")
+        go("Up", dist)
 
-    updateCharacter("user", currentCell);
+    updateCharacter(name, currentCell);
     setTimeout(simpleShortestPath, speed);
 }
 
-function go(dir) {
+function go(dir, dist) {
     done = false;
     switch(dir){
-        case "right": currentCell += 1; break;
-        case "left": currentCell -= 1; break;
-        case "down": currentCell += cols; break;
-        case "up": currentCell -= cols; break;
+        case "Right": currentCell += 1; break;
+        case "Left": currentCell -= 1; break;
+        case "Down": currentCell += cols; break;
+        case "Up": currentCell -= cols; break;
+    }
+    facing = dir;
+    if (dist > 5){
+        mode = "Run"
+        speed = 150
+    }
+    else{
+        mode = "Walk"
+        speed = 250
     }
     // update css top/left of character
 }
 
-function stop() {done = true;}
+function stop() {done = true; mode = "Sit"; updateCharacter(name, currentCell);}
 
-function updateCharacter (cId, dest){
-    let character = document.getElementById(cId);
+function updateCharacter (char, dest){
+    // let character = document.getElementById(char);
+    let characterImg = document.getElementById(char + "Img");
     let destCell = findCell(dest);
     character.style.top = (destCell.top + debugBorder) + "px";
     character.style.left = (destCell.left + debugBorder) + "px";
+    character.style.transition = "left "+speed+"ms linear, top "+speed+"ms linear;"
+    if (lastMode !== (mode+facing))
+        characterImg.setAttribute("src", "images/"+char+"/"+char+mode+facing+".gif")
+    lastMode = mode+facing;
 
 }
 
-function initCharacter() {
-    let character = document.createElement("div");
+function initCharacter(char) {
+    character = document.createElement("div");
     let cImg = document.createElement("img");
     let helper = document.createElement("div");
     helper.setAttribute("class", "helper");
-    cImg.setAttribute("src", "images/dog/dog_sleep.gif");
+    cImg.setAttribute("src", "images/"+char+"/"+char+mode+facing+".gif");
+    cImg.setAttribute("id", char+"Img")
     character.append(helper);
     character.append(cImg);
 
-    character.setAttribute("id", "user");
+    character.setAttribute("id", char);
     character.setAttribute("class", "character");
     character.style.height = cellSize + "px";
     character.style.width = cellSize + "px";
     gb.append(character);
+    updateCharacter(name, currentCell);
 
 }
 
 
 
-initCharacter();
-updateCharacter("user", currentCell);
+initCharacter("titan");
+updateCharacter("titan", currentCell);

@@ -32,6 +32,10 @@ function initGrid() {
     cellCount = cols * rows;
 
     for (let id = 0; id < cellCount; id++) {
+        if(id % cols == 0 && id !== 0){
+            let br = document.createElement("div");
+            gb.appendChild(br);
+        }
         let cell = document.createElement("div");
         cell.setAttribute("class", "cell");
         cell.setAttribute("id", id);
@@ -41,18 +45,18 @@ function initGrid() {
         gb.appendChild(cell);
     }
 
-    for (let row = 0; row < rows; row++){
-        for (let col = 0; col < cols; col++){
-            let cell = document.createElement("div");
-            cell.setAttribute("class", "cell");
-            cell.setAttribute("id", row * cols + col);
-            cell.addEventListener("click", cellClick);
-            cell.style.height = cellSize + "px";
-            cell.style.width = cellSize + "px";
-            cell.style.left = col * cellSize + "px";
-            cell.style.top = row * cellSize + "px";
-        }
-    }
+    // for (let row = 0; row < rows; row++){
+    //     for (let col = 0; col < cols; col++){
+    //         let cell = document.createElement("div");
+    //         cell.setAttribute("class", "cell");
+    //         cell.setAttribute("id", row * cols + col);
+    //         cell.addEventListener("click", cellClick);
+    //         cell.style.height = cellSize + "px";
+    //         cell.style.width = cellSize + "px";
+    //         cell.style.left = col * cellSize + "px";
+    //         cell.style.top = row * cellSize + "px";
+    //     }
+    // }
 }
 
 function clearGrid() {
@@ -84,7 +88,7 @@ function findCell(id){
 window.onresize = function(event) {
     clearGrid()
     initGrid()
-    initCharacter()
+    initCharacter(name)
 }
 
 
