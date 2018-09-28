@@ -1,16 +1,3 @@
-let currentCell = 0;
-let clickedCell = 0
-let done = true;
-let pathSearch = simpleShortestPath;
-let speed = 150;
-let facing = "Right";
-let lastMode = "Sleep"
-let mode = "Sleep"
-let modes = ["Walk", "Run", "Sit", "Sleep"]
-let dirs =  ["Up", "Down", "Left", "Right"]
-let myName = "titan"
-let character;
-
 function simpleShortestPath() {
     let src = currentCell;
     let dest = clickedCell;
@@ -93,8 +80,3 @@ function clearCharacter(char){
     parent.removeChild(character);
     // initCharacter(char);
 }
-
-
-
-initCharacter("titan");
-updateCharacter("titan", currentCell);

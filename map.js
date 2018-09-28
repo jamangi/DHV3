@@ -1,11 +1,3 @@
-let mapSize = [20, 20]
-let mapRows = mapSize[1];
-let mapCols = mapSize[0];
-let origin = [0, 0]
-let map = document.getElementById("map")
-let body = document.getElementById("body");
-
-
 function createObject(folder, name, size, mapCell){
     let obj = document.createElement("div");
     obj.style.width = (size[0] * cellSize + debugBorder) + "px";
@@ -86,5 +78,3 @@ function initMapTiles(name) {
         }
     }
 }
-
-initMapTiles("brownfloor_2_2.png");
