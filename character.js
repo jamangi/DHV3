@@ -44,8 +44,8 @@ function go(dir, dist) {
     switch(dir){
         case "Right": currentCell += 1; break;
         case "Left": currentCell -= 1; break;
-        case "Down": currentCell += cols; break;
-        case "Up": currentCell -= cols; break;
+        case "Down": currentCell += gameCols; break;
+        case "Up": currentCell -= gameCols; break;
     }
     facing = dir;
     mode = "Run"
@@ -82,7 +82,7 @@ function initCharacter(char) {
     character.setAttribute("class", "character");
     character.style.height = cellSize + "px";
     character.style.width = cellSize + "px";
-    gb.append(character);
+    map.append(character);
     updateCharacter(name, currentCell);
 
 }

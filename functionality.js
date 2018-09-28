@@ -10,9 +10,9 @@ let cellSize = Math.floor(shortest / fraction) - debugBorder;
 console.log(cellSize)
 
 // calculate amount of expected cells
-let cols = Math.floor(gbwidth / cellSize);
-let rows = Math.floor(gbheight / cellSize);
-let cellCount = cols * rows;
+let gameCols = Math.floor(gbwidth / cellSize);
+let gameRows = Math.floor(gbheight / cellSize);
+let cellCount = gameCols * gameRows;
 console.log(cellCount)
 
 function initGrid() {
@@ -27,12 +27,12 @@ function initGrid() {
     cellSize = Math.floor(shortest / fraction) - debugBorder;
 
     // calculate amount of expected cells
-    cols = Math.floor(gbwidth / cellSize);
-    rows = Math.floor(gbheight / cellSize);
-    cellCount = cols * rows;
+    gameCols = Math.floor(gbwidth / cellSize);
+    gameRows = Math.floor(gbheight / cellSize);
+    cellCount = gameCols * gameRows;
 
     for (let id = 0; id < cellCount; id++) {
-        if(id % cols == 0 && id !== 0){
+        if(id % gameCols == 0 && id !== 0){
             let br = document.createElement("div");
             gb.appendChild(br);
         }
@@ -78,11 +78,12 @@ function cellClick() {
 }
 
 function findCell(id){
-    let col = id % cols;
-    let row = Math.floor(id / cols);
+    let col = id % gameCols;
+    let row = Math.floor(id / gameCols);
 
     return {left: col * cellSize, top: row * cellSize};
 }
+
 
 
 window.onresize = function(event) {
