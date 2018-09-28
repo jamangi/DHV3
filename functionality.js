@@ -1,21 +1,15 @@
 let gb = document.getElementById('gamebox');
 let footer = document.getElementById('footer');
 let material = document.getElementById('material');
-let gbheight = gb.offsetHeight;
-let gbwidth = gb.offsetWidth;
-let shortest = gbheight < gbwidth? gbheight : gbwidth;
 let fraction = 10;
 let debugBorder = 2;
-
-// cellsize is a fraction of shortest dimension
-let cellSize = Math.floor(shortest / fraction) - debugBorder;
-console.log(cellSize)
-
-// calculate amount of expected cells
-let gameCols = Math.floor(gbwidth / cellSize);
-let gameRows = Math.floor(gbheight / cellSize);
-let cellCount = gameCols * gameRows;
-console.log(cellCount)
+let gbheight;
+let gbwidth;
+let shortest;
+let cellSize;
+let gameCols;
+let gameRows;
+let cellCount;
 
 function initGrid() {
     // fill the gamebox with divs
@@ -26,24 +20,22 @@ function initGrid() {
     shortest = gbheight < gbwidth? gbheight : gbwidth;
 
     // cellsize is a fraction of shortest dimension
-    cellSize = Math.floor(shortest / fraction) - debugBorder;
+    cellSize = (shortest / fraction);
 
     // calculate amount of expected cells
-    gameCols = Math.floor(gbwidth / cellSize);
-    gameRows = Math.floor(gbheight / cellSize);
+    gameCols = Math.floor(gbwidth / (cellSize + debugBorder));
+    gameColsRemainder = gbwidth % gameCols;
+    gameRows = Math.floor(gbheight / (cellSize + debugBorder));
+    gameRowsRemainder = gbheight % gameRows;
     cellCount = gameCols * gameRows;
 
     for (let id = 0; id < cellCount; id++) {
-        if(id % gameCols == 0 && id !== 0){
-            let br = document.createElement("div");
-            gb.appendChild(br);
-        }
         let cell = document.createElement("div");
         cell.setAttribute("class", "cell");
         cell.setAttribute("id", id);
         cell.addEventListener("click", cellClick);
-        cell.style.height = cellSize + "px";
-        cell.style.width = cellSize + "px";
+        cell.style.height = cellSize + (gameRowsRemainder / gameRows) + "px";
+        cell.style.width = cellSize + (gameColsRemainder / gameCols) + "px";
         gb.appendChild(cell);
     }
 
