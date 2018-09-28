@@ -1,1 +1,1 @@
-gb.style["z-index"] = mapSize[1];
+// gb.style["z-index"] = mapSize[1];

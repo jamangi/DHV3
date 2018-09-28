@@ -1,10 +1,9 @@
-let mapSize = [1000, 1000]
+let mapSize = [20, 20]
 let mapRows = mapSize[1];
 let mapCols = mapSize[0];
 let origin = [0, 0]
 let map = document.getElementById("map")
-
-
+let body = document.getElementById("body");
 
 
 function createObject(folder, name, size, mapCell){
@@ -32,13 +31,13 @@ function createObject(folder, name, size, mapCell){
 
 function setMapPosition(obj) {
     let coordinates = findMapCoordinates(obj.mapCell);
-    obj.style.left = origin[0] + coordinates.left;
-    obj.style.top = origin[0] + coordinates.top;
+    obj.style.left = origin[0] + coordinates.left + "px";
+    obj.style.top = origin[1] + coordinates.top + "px";
 }
 
 function findMapCoordinates(mapCell) {
     let col = mapCell % mapSize[0];
-    let row = mapCell / mapSize[0];
+    let row = Math.floor(mapCell / mapSize[0]);
     return {left: col * cellSize, top: row * cellSize};
 }
 
@@ -53,5 +52,39 @@ function mapCol(gameCol){return origin[0] + gameCol;}
 function gameRow(id) {return Math.floor(id / gameCols);}
 function gameCol(id) {return id % gameCols;}
 
-createObject("map/floor", "brownfloor_2_2.png", [2,2], 0);
+function clearAll(){
+    body.removeChild(map);
+    body.removeChild(footer)
+}
 
+function clearMap(){
+
+}
+
+function initMap() {
+    map = document.createElement("main");
+    map.setAttribute("id", "map");
+    gb = document.createElement("article");
+    gb.setAttribute("id", "gamebox");
+    material = document.createElement("aside");
+    material.setAttribute("id", "material");
+    footer = document.createElement("footer");
+    footer.setAttribute("id", "footer");
+    map.append(gb);
+    map.append(material);
+    body.append(map);
+    body.append(footer);
+
+}
+
+function initMapTiles(name) {
+    for (let mapRow = 0; mapRow < mapSize[0]; mapRow+=2) {
+        for(let mapCol = 0; mapCol < mapSize[1]; mapCol+=2){
+            let x = findMapCell(mapRow, mapCol)
+            createObject("map/floor", name, [2,2], x);
+            console.log(x)
+        }
+    }
+}
+
+initMapTiles("brownfloor_2_2.png");

@@ -1,4 +1,6 @@
 let gb = document.getElementById('gamebox');
+let footer = document.getElementById('footer');
+let material = document.getElementById('material');
 let gbheight = gb.offsetHeight;
 let gbwidth = gb.offsetWidth;
 let shortest = gbheight < gbwidth? gbheight : gbwidth;
@@ -68,6 +70,7 @@ function clearGrid() {
     gb = document.createElement("article");
     gb.setAttribute("id", "gamebox");
     gb_parent.appendChild(gb);
+    clearCharacter("titan");
 }
 
 function cellClick() {
@@ -87,9 +90,12 @@ function findCell(id){
 
 
 window.onresize = function(event) {
-    clearGrid()
-    initGrid()
-    initCharacter(name)
+    // clearGrid()
+    clearAll();
+    initMap();
+    initGrid();
+    initMapTiles("brownfloor_2_2.png");
+    initCharacter(myName);
 }
 
 

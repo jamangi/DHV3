@@ -8,7 +8,7 @@ let lastMode = "Sleep"
 let mode = "Sleep"
 let modes = ["Walk", "Run", "Sit", "Sleep"]
 let dirs =  ["Up", "Down", "Left", "Right"]
-let name = "titan"
+let myName = "titan"
 let character;
 
 function simpleShortestPath() {
@@ -35,7 +35,7 @@ function simpleShortestPath() {
     else if (srcCell.top > destCell.top)   //go up
         go("Up", dist)
 
-    updateCharacter(name, currentCell);
+    updateCharacter(myName, currentCell);
     setTimeout(simpleShortestPath, speed);
 }
 
@@ -53,14 +53,14 @@ function go(dir, dist) {
     // update css top/left of character
 }
 
-function stop() {done = true; mode = "Sit"; updateCharacter(name, currentCell);}
+function stop() {done = true; mode = "Sit"; updateCharacter(myName, currentCell);}
 
 function updateCharacter (char, dest){
     // let character = document.getElementById(char);
     let characterImg = document.getElementById(char + "Img");
     let destCell = findCell(dest);
-    character.style.top = (destCell.top + debugBorder) + "px";
-    character.style.left = (destCell.left + debugBorder) + "px";
+    character.style.top = (destCell.top + (debugBorder * gameRow(dest))) + "px";
+    character.style.left = (destCell.left + (debugBorder * gameCol(dest))) + "px";
     character.style.transition = "left "+speed+"ms linear, top "+speed+"ms linear;"
     if (lastMode !== (mode+facing))
         characterImg.setAttribute("src", "images/"+char+"/"+char+mode+facing+".gif")
@@ -83,8 +83,15 @@ function initCharacter(char) {
     character.style.height = cellSize + "px";
     character.style.width = cellSize + "px";
     map.append(character);
-    updateCharacter(name, currentCell);
+    updateCharacter(myName, currentCell);
 
+}
+
+function clearCharacter(char){
+    character = document.getElementById(char);
+    parent = character.parentNode;
+    parent.removeChild(character);
+    // initCharacter(char);
 }
 
 
